@@ -871,6 +871,7 @@ export interface ApiOrderOrder extends Schema.CollectionType {
       'api::product.product'
     >;
     email: Attribute.Email;
+    key: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
