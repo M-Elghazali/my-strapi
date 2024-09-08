@@ -35,6 +35,17 @@
     },
     "key": {
       "type": "string"
+    },
+    "PaymentProcess": {
+      "type": "enumeration",
+      "enum": [
+        "Processing",
+        "Approved",
+        "Declined"
+      ]
+    },
+    "emailSender": {
+      "type": "email"
     }
   }
 }

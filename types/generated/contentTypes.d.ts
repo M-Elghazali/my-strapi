@@ -724,6 +724,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.role'
     >;
     phone: Attribute.String;
+    rank: Attribute.Enumeration<['user', 'admin']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -816,6 +817,40 @@ export interface ApiCartCart extends Schema.CollectionType {
   };
 }
 
+export interface ApiCouponCoupon extends Schema.CollectionType {
+  collectionName: 'coupons';
+  info: {
+    singularName: 'coupon';
+    pluralName: 'coupons';
+    displayName: 'Coupon';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    code: Attribute.String;
+    discountPercentage: Attribute.Integer;
+    usageLimit: Attribute.Integer;
+    usageCount: Attribute.Integer;
+    expirationDate: Attribute.Date;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::coupon.coupon',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::coupon.coupon',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMessageMessage extends Schema.CollectionType {
   collectionName: 'messages';
   info: {
@@ -872,6 +907,10 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     >;
     email: Attribute.Email;
     key: Attribute.String;
+    PaymentProcess: Attribute.Enumeration<
+      ['Processing', 'Approved', 'Declined']
+    >;
+    emailSender: Attribute.Email;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1032,6 +1071,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::cart.cart': ApiCartCart;
+      'api::coupon.coupon': ApiCouponCoupon;
       'api::message.message': ApiMessageMessage;
       'api::order.order': ApiOrderOrder;
       'api::product.product': ApiProductProduct;
